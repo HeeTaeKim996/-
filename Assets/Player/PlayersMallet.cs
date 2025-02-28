@@ -38,14 +38,14 @@ public class PlayersMallet : MonoBehaviourPun
                 magnitude = 0.8f;
             }
 
-
             playerRigidbody.velocity = moveVector.normalized * magnitude * 50f;
         }
     }
 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if( ( ( 1 << collision.gameObject.layer) & puckLayer ) != 0)
+        if (((1 << collision.gameObject.layer) & puckLayer) != 0)
         {
             if (photonView.IsMine)
             {
@@ -66,6 +66,8 @@ public class PlayersMallet : MonoBehaviourPun
                 #endregion
 
                 PhotonView puckPhotonView = collision.gameObject.GetComponent<PhotonView>();
+
+                Debug.Log("Check");
 
                 photonView.RPC("AddForce_MasterClient", RpcTarget.MasterClient, puckPhotonView.ViewID, forceDirection, force);
             }
@@ -88,7 +90,6 @@ public class PlayersMallet : MonoBehaviourPun
         isMove = true;
         OnMoveDrag(vector2);
     }
-
     public void OnMoveDrag(Vector2 vector2)
     {
         moveWorldPosition = mainCam.ScreenToWorldPoint(vector2);
